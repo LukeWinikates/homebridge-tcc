@@ -1,18 +1,20 @@
 /*jslint node: true */
-'use strict';
+import debug0 from "debug";
 
-var debug = require('debug')('tcc');
+import os from "os";
+
+import {tcc as Tcc} from "./lib/tcc.js";
+
+import moment from "moment";
+
+var debug = debug0('tcc');
 var Accessory, Service, Characteristic, UUIDGen, FakeGatoHistoryService, CustomCharacteristic;
-var os = require("os");
 var hostname = os.hostname();
-var Tcc = require('./lib/tcc.js').tcc;
-const moment = require('moment');
-
 var myAccessories = [];
 var thermostats;
 var outsideSensorsCreated = false;
 
-module.exports = function(homebridge) {
+export default function (homebridge) {
   Accessory = homebridge.platformAccessory;
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
@@ -23,7 +25,7 @@ module.exports = function(homebridge) {
   // tcc.setCharacteristic(Characteristic);
 
   homebridge.registerPlatform("homebridge-tcc", "tcc", tccPlatform);
-};
+}
 
 function tccPlatform(log, config, api) {
   this.username = config['username'];
